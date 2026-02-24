@@ -62,11 +62,3 @@ def checkLetterFrequency(ciphertext: str) -> dict:
 
 def test():
     assert checkLetterFrequency("ABCD") == {"A" : 0.25, "B" : 0.25, "C" : 0.25, "D" : 0.25}
-
-if __name__ == '__main__' and not flags.interactive:
-    test()
-    text = open("ciphertext.txt").read()
-    freqs = checkLetterFrequency(text)
-
-    for k in sorted(freqs, key=freqs.get, reverse=True):
-        print(k, freqs[k])
