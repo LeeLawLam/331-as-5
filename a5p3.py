@@ -39,7 +39,25 @@ import a5p1, a5p2
 from sys import flags
 
 def checkLetterFrequency(ciphertext: str) -> dict:
-    raise NotImplementedError
+    text = ciphertext.upper()
+
+    # Count only letters
+    counts = {}
+    total = 0
+    for ch in text:
+        if ch.isalpha():
+            total += 1
+            counts[ch] = counts.get(ch, 0) + 1
+
+    # Convert counts to frequencies
+    freqs = {}
+    if total == 0:
+        return freqs
+
+    for ch in counts:
+        freqs[ch] = counts[ch] / total
+
+    return freqs
 
 
 def test():
@@ -47,3 +65,8 @@ def test():
 
 if __name__ == '__main__' and not flags.interactive:
     test()
+    text = open("ciphertext.txt").read()
+    freqs = checkLetterFrequency(text)
+
+    for k in sorted(freqs, key=freqs.get, reverse=True):
+        print(k, freqs[k])

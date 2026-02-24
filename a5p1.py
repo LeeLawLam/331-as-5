@@ -43,13 +43,46 @@ def freqDict(ciphertext: str) -> dict:
     """
     Analyze the frequency of the letters
     """
-    raise NotImplementedError
+    ciphertext = ciphertext.upper()
+    
+    # Count only alphabetic characters
+    letters = [c for c in ciphertext if c.isalpha()]
+    counts = Counter(letters)
+    
+    # Sort letters by:
+    # 1. descending frequency
+    # 2. alphabetical order for ties
+    sorted_letters = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
+    
+    mapping = {}
+    
+    for i, (letter, _) in enumerate(sorted_letters):
+        if i < len(ETAOIN):
+            mapping[letter] = ETAOIN[i]
+    
+    return mapping
 
 def freqDecrypt(mapping: dict, ciphertext: str) -> str:
     """
     Apply the mapping to ciphertext
     """
-    raise NotImplementedError
+    result = ""
+    
+    for c in ciphertext:
+        if c.isalpha():
+            upper = c.upper()
+            if upper in mapping:
+                decoded = mapping[upper]
+                if c.islower():
+                    result += decoded.lower()
+                else:
+                    result += decoded
+            else:
+                result += c
+        else:
+            result += c
+    
+    return result
 
 def test():
     "Run tests"

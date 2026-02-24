@@ -54,7 +54,48 @@ def evalDecipherment(text1: str, text2: str) -> [float, float]:
     This function should compare the two files and return a list containing two fields that
     correspond to the key accuracy and decipherment accuracy of text2 w.r.t. the plaintext, text1
     """
-    raise NotImplementedError()
+    
+    t1 = text1.upper()
+    t2 = text2.upper()
+
+    # Token accuracy (per-letter position)
+    total_tokens = 0
+    correct_tokens = 0
+
+    # For key accuracy: track, for each plaintext letter type,
+    # whether ALL its occurrences were decoded correctly.
+    # We will mark a type as "seen" if it appears in any evaluated position.
+    type_all_correct = {}
+
+    # Compare aligned positions; only count where BOTH are alphabetic
+    n = min(len(t1), len(t2))
+    for i in range(n):
+        c1 = t1[i]
+        c2 = t2[i]
+
+        if c1.isalpha() and c2.isalpha():
+            total_tokens += 1
+
+            if c1 == c2:
+                correct_tokens += 1
+
+            # Initialize as True on first sight, then AND with correctness
+            if c1 not in type_all_correct:
+                type_all_correct[c1] = True
+            type_all_correct[c1] = type_all_correct[c1] and (c1 == c2)
+
+    # If there are no alphabetic tokens, avoid division by zero
+    if total_tokens == 0:
+        return [0.0, 0.0]
+
+    # Key accuracy: proportion of plaintext letter types with all occurrences correct
+    total_types = len(type_all_correct)
+    correct_types = sum(1 for k in type_all_correct if type_all_correct[k])
+
+    key_accuracy = correct_types / total_types if total_types > 0 else 0.0
+    decipherment_accuracy = correct_tokens / total_tokens
+
+    return [key_accuracy, decipherment_accuracy]
 
 
 def test():
