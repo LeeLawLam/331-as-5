@@ -33,7 +33,7 @@
 """
 CMPUT 331 Assignment 5 Problem 1 Student Solution
 January 2025
-Author: <Your name here>
+Author: Louis Lam
 """
 ETAOIN = "ETAOINSHRDLCUMWFGYPBVKJXQZ"
 from sys import flags
@@ -50,8 +50,8 @@ def freqDict(ciphertext: str) -> dict:
     counts = Counter(letters)
     
     # Sort letters by:
-    # 1. descending frequency
-    # 2. alphabetical order for ties
+    # 1:descending frequency
+    # 2:alphabetical order for ties
     sorted_letters = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
     
     mapping = {}

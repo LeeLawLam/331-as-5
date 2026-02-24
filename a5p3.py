@@ -33,7 +33,7 @@
 """
 CMPUT 331 Assignment 5 Problem 3 Student Solution
 January 2025
-Author: <Your name here>
+Author: Louis Lam
 """
 import a5p1, a5p2
 from sys import flags
@@ -62,3 +62,4 @@ def checkLetterFrequency(ciphertext: str) -> dict:
 
 def test():
     assert checkLetterFrequency("ABCD") == {"A" : 0.25, "B" : 0.25, "C" : 0.25, "D" : 0.25}
+    
